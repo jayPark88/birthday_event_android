@@ -63,7 +63,7 @@ class PasswordActivity : AppCompatActivity() {
     }
 
     private fun checkPassword() {
-        if (inputPin == "1234") {
+        if (inputPin == "0430") {
             val intent = Intent(this, SuccessActivity::class.java)
             startActivity(intent)
             finish()
