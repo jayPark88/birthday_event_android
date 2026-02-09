@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnNext.setOnClickListener {
+            SoundUtil.playBeep()
             val intent = Intent(this, PasswordActivity::class.java)
             startActivity(intent)
         }
