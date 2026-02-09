@@ -32,6 +32,7 @@ class PasswordActivity : AppCompatActivity() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
+                SoundUtil.playBeep()
                 if (inputPin.length < 4) {
                     inputPin += (it as Button).text
                     updatePinIndicator()
@@ -43,6 +44,7 @@ class PasswordActivity : AppCompatActivity() {
         }
 
         binding.btnDelete.setOnClickListener {
+            SoundUtil.playBeep()
             if (inputPin.isNotEmpty()) {
                 inputPin = inputPin.substring(0, inputPin.length - 1)
                 updatePinIndicator()
@@ -63,11 +65,13 @@ class PasswordActivity : AppCompatActivity() {
     }
 
     private fun checkPassword() {
-        if (inputPin == "0430") {
+        if (inputPin == "0117") {
+            SoundUtil.playConfirm()
             val intent = Intent(this, SuccessActivity::class.java)
             startActivity(intent)
             finish()
         } else {
+            SoundUtil.playError()
             // Shake animation
             val shake = AnimationUtils.loadAnimation(this, android.R.anim.fade_in) // In real case, use a custom shake animation
             binding.tvPinIndicator.startAnimation(shake)

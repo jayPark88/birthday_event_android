@@ -28,13 +28,13 @@ class SuccessActivity : AppCompatActivity() {
     }
 
     private fun startSequence() {
-        // 1 & 2단계: 카드 삽입 애니메이션 (10초간 유지)
+        // 1 & 2단계: 카드 삽입 애니메이션 (5초간 유지로 수정)
         playCardInsertionAnimation()
 
-        // 10초 후 3단계로 전환
+        // 3초 후 3단계로 전환
         handler.postDelayed({
             showLoadingStage()
-        }, 10000)
+        }, 3000)
     }
 
     private fun playCardInsertionAnimation() {
