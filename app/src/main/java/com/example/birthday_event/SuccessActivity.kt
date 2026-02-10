@@ -65,8 +65,9 @@ class SuccessActivity : BaseActivity() {
 
     private fun startMoneyRain() {
         isAnimating = true
-        // 4단계: 돈 내릴 때 팡파르!
+        // 4단계: 돈 내릴 때 팡파르와 함께 BGM 시작!
         SoundUtil.playSuccessFanfare()
+        BgmManager.start(this) // BGM 재생 시작
 
         // 주기적으로 돈(지폐) 생성
         handler.post(object : Runnable {
@@ -113,9 +114,25 @@ class SuccessActivity : BaseActivity() {
         rotateAnim.start()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // 애니메이션 중이라면 BGM 재개 (앱 복귀 시)
+        if (isAnimating) {
+            BgmManager.resume()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // 홈 버튼 등을 누를 때 BGM 일시정지
+        BgmManager.pause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         isAnimating = false
         handler.removeCallbacksAndMessages(null)
+        // 화면이 닫힐 때 BGM 완전 정지 및 해제
+        BgmManager.stop()
     }
 }
