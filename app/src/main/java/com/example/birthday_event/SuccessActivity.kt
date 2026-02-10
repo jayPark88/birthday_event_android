@@ -28,7 +28,8 @@ class SuccessActivity : AppCompatActivity() {
     }
 
     private fun startSequence() {
-        // 1 & 2단계: 카드 삽입 애니메이션 (5초간 유지로 수정)
+        // 1단계: 카드 삽입 시 기계음
+        SoundUtil.playCardMechanical()
         playCardInsertionAnimation()
 
         // 3초 후 3단계로 전환
@@ -53,6 +54,9 @@ class SuccessActivity : AppCompatActivity() {
         // 3단계: "현금 인출 중..." 레이아웃 표시
         binding.layoutLoading.visibility = View.VISIBLE
 
+        // 현금 인출 중... (지폐 세는 소리 3초간 재생)
+        SoundUtil.playMoneyCounting(3000)
+
         // 3초간 로딩 후 4단계(돈다발) 시작
         handler.postDelayed({
             binding.layoutLoading.visibility = View.GONE
@@ -62,12 +66,15 @@ class SuccessActivity : AppCompatActivity() {
 
     private fun startMoneyRain() {
         isAnimating = true
-        // 4단계: 주기적으로 돈(지폐) 생성
+        // 4단계: 돈 내릴 때 팡파르!
+        SoundUtil.playSuccessFanfare()
+
+        // 주기적으로 돈(지폐) 생성
         handler.post(object : Runnable {
             override fun run() {
                 if (isAnimating) {
                     createBanknote()
-                    handler.postDelayed(this, 80) // 더 화려하게 0.08초마다 생성
+                    handler.postDelayed(this, 80)
                 }
             }
         })
@@ -76,7 +83,6 @@ class SuccessActivity : AppCompatActivity() {
     private fun createBanknote() {
         val banknote = ImageView(this).apply {
             setImageResource(R.drawable.ic_banknote)
-            // 랜덤한 지폐 크기
             val size = random.nextInt(100) + 120
             layoutParams = ViewGroup.LayoutParams(size, size / 2)
         }
@@ -85,14 +91,12 @@ class SuccessActivity : AppCompatActivity() {
         val screenHeight = binding.container.height
         if (screenWidth <= 0 || screenHeight <= 0) return
 
-        // 랜덤 시작 위치 및 초기 회전
         banknote.x = random.nextInt(screenWidth).toFloat()
         banknote.y = -200f
         banknote.rotation = random.nextInt(360).toFloat()
 
         binding.container.addView(banknote)
 
-        // 애니메이션: 위에서 아래로 낙하 + 회전
         val duration = random.nextInt(1500) + 1500L
         val fallAnim = ObjectAnimator.ofFloat(banknote, "translationY", screenHeight.toFloat() + 200)
         val rotateAnim = ObjectAnimator.ofFloat(banknote, "rotation", banknote.rotation + 720f)
