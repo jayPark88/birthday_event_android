@@ -9,10 +9,9 @@ import android.os.Vibrator
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.birthday_event.databinding.ActivityPasswordBinding
 
-class PasswordActivity : AppCompatActivity() {
+class PasswordActivity : BaseActivity() {
     private lateinit var binding: ActivityPasswordBinding
     private var inputPin = ""
 

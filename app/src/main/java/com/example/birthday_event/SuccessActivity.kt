@@ -9,11 +9,10 @@ import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import com.example.birthday_event.databinding.ActivitySuccessBinding
 import java.util.Random
 
-class SuccessActivity : AppCompatActivity() {
+class SuccessActivity : BaseActivity() {
     private lateinit var binding: ActivitySuccessBinding
     private val handler = Handler(Looper.getMainLooper())
     private val random = Random()
